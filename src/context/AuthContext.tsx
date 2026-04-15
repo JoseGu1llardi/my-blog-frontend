@@ -1,4 +1,5 @@
 import type { ReactNode } from 'react';
+import { logout as logoutApi } from '../api/auth';
 import type { AuthResponse } from '../types/auth';
 import { createContext, useContext, useState } from 'react';
 
@@ -31,11 +32,17 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         setUser({ username: data.username, fullName: data.fullName });
     }
 
-    function logout() {
-        localStorage.removeItem('token');
-        localStorage.removeItem('user');
-        setToken(null);
-        setUser(null);
+    async function logout() {
+        try {
+            await logoutApi();
+        } catch (error) {
+            console.error('Logout failed:', error); 
+        } finally {
+            localStorage.removeItem('token');
+            localStorage.removeItem('user');
+            setToken(null);
+            setUser(null);
+        }
     }
 
     return (
