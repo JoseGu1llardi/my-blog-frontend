@@ -1,7 +1,8 @@
 import { useState } from 'react';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
-import { getPosts, publishPost, unpublishPost, deletePost } from '../../api/posts';
-import type { PostSummaryResponse } from '../../types/post';
+import { publishPost, unpublishPost, deletePost, getMyPosts } from '../../api/posts';
+import type { PostResponse } from '../../types/post';
+import { useNavigate } from 'react-router-dom';
 
 function StatusBadge({ status }: { status: string }) {
     const styles: Record<string, string> = {
@@ -20,10 +21,11 @@ function StatusBadge({ status }: { status: string }) {
 export default function PostsPage() {
     const [page, setPage] = useState(0);
     const queryClient = useQueryClient();
+    const navigate = useNavigate();
 
     const { data, isLoading, isError } = useQuery({
         queryKey: ['posts', page],
-        queryFn: () => getPosts(page),
+        queryFn: () => getMyPosts(page),
     });
 
     const publish = useMutation({
@@ -50,7 +52,9 @@ export default function PostsPage() {
         <div>
             <div className="flex items-center justify-between mb-6">
                 <h2 className="text-xl font-semibold text-gray-900">Posts</h2>
-                <button className="bg-blue-600 text-white text-sm px-4 py-2 rounded-lg hover:bg-blue-700 transition-colors">
+                <button
+                    onClick={() => navigate('/admin/posts/new')}
+                    className="bg-blue-600 text-white text-sm px-4 py-2 rounded-lg hover:bg-blue-700 transition-colors">
                     New post
                 </button>
             </div>
@@ -70,7 +74,7 @@ export default function PostsPage() {
                             </tr>
                         </thead>
                         <tbody className="divide-y divide-gray-100">
-                            {posts.map((post: PostSummaryResponse) => (
+                            {posts.map((post: PostResponse) => (
                                 <tr key={post.id} className="hover:bg-gray-50">
                                     <td className="px-4 py-3 font-medium text-gray-900 max-w-xs truncate">
                                         {post.title}

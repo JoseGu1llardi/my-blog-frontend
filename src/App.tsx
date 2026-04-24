@@ -3,6 +3,7 @@ import { useAuth } from './context/AuthContext';
 import LoginPage from './pages/LoginPage';
 import PostsPage from './pages/admin/PostsPage';
 import type React from 'react';
+import CreatePostPage from './pages/admin/CreatePostPage';
 
 function ProtectedRoute({ children }: { children: React.ReactNode }) {
     const { isAuthenticated } = useAuth();
@@ -63,6 +64,7 @@ export default function App() {
                         <AdminLayout>
                             <Routes>
                                 <Route path='posts' element={<PostsPage />} />
+                                <Route path='posts/new' element={<CreatePostPage />} />
                                 <Route index element={<Navigate to='posts' replace />} />
                             </Routes>
                         </AdminLayout>

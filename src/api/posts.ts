@@ -9,6 +9,14 @@ export async function getPosts(page = 0, size = 10): Promise<PageResponse<PostSu
     return response.data;
 }
 
+export async function getMyPosts(page = 0, size = 10): Promise<PageResponse<PostResponse>> {
+    const response = await apiClient<ApiResponse<PageResponse<PostResponse>>>(
+        `/api/v1/posts/my-posts?page=${page}&size=${size}`
+    );
+
+    return response.data;
+}
+
 export async function getPost(slug: string): Promise<PostResponse> {
     const response = await apiClient<ApiResponse<PostResponse>>(
         `/api/v1/posts/${slug}`
