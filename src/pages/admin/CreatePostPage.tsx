@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { createPost } from '../../api/posts';
-import type { PostCreateRequest, PostStatus } from '../../types/post';
+import type { PostCreateRequest } from '../../types/post';
 import type { ErrorResponse } from '../../types/api';
 
 export default function CreatePostPage() {

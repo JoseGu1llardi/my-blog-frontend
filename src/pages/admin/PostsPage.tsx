@@ -83,7 +83,7 @@ export default function PostsPage() {
                                         {post.author.fullName}
                                     </td>
                                     <td className="px-4 py-3">
-                                        <StatusBadge status={post.publishedAt ? 'PUBLISHED' : 'DRAFT'} />
+                                        <StatusBadge status={post.status} />
                                     </td>
                                     <td className="px-4 py-3 text-gray-500">
                                         {post.publishedAt
