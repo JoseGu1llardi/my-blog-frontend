@@ -114,6 +114,12 @@ export default function PostsPage() {
                                             >
                                                 Delete
                                             </button>
+                                            <button
+                                                onClick={() => navigate(`/admin/posts/${post.id}/edit`)}
+                                                className="text-blue-600 hover:text-blue-700 text-xs font-medium"
+                                            >
+                                                Edit
+                                            </button>
                                         </div>
                                     </td>
                                 </tr>

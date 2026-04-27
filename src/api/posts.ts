@@ -17,7 +17,15 @@ export async function getMyPosts(page = 0, size = 10): Promise<PageResponse<Post
     return response.data;
 }
 
-export async function getPost(slug: string): Promise<PostResponse> {
+export async function getMyPostById(id: number): Promise<PostResponse> {
+    const response = await apiClient<ApiResponse<PostResponse>>(
+        `/api/v1/posts/my-posts/${id}`
+    );
+
+    return response.data;
+}
+
+export async function getPublishedPost(slug: string): Promise<PostResponse> {
     const response = await apiClient<ApiResponse<PostResponse>>(
         `/api/v1/posts/${slug}`
     );
