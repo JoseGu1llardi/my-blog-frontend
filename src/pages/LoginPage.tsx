@@ -39,52 +39,52 @@ export default function LoginPage() {
     }
 
     return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-50">
-      <div className="w-full max-w-sm bg-white rounded-2xl shadow p-8">
-        <h1 className="text-2xl font-bold text-gray-900 mb-6">Sign in</h1>
+        <div className="min-h-screen flex items-center justify-center bg-white">
+            <div className="w-full max-w-sm bg-white rounded-2xl border border-black/8 p-8">
+                <h1 className="text-3xl font-bold text-black tracking-tight mb-2">Sign in</h1>
+                <p className="text-sm text-black/50 mb-8">Enter your credentials to continue.</p>
 
-        <form onSubmit={handleSubmit} className="space-y-4">
-          <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">
-              Username
-            </label>
-            <input
-              type="text"
-              value={username}
-              onChange={e => setUsername(e.target.value)}
-              className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
-              required
-              autoFocus
-            />
-          </div>
+                <form onSubmit={handleSubmit} className="space-y-5">
+                    <div>
+                        <label className="block text-sm font-semibold text-black mb-1.5">
+                            Username
+                        </label>
+                        <input
+                            type="text"
+                            value={username}
+                            onChange={e => setUsername(e.target.value)}
+                            className="w-full border border-black/15 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-brand"
+                            required
+                            autoFocus
+                        />
+                    </div>
 
-          <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">
-              Password
-            </label>
-            <input
-              type="password"
-              value={password}
-              onChange={e => setPassword(e.target.value)}
-              className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
-              required
-            />
-          </div>
+                    <div>
+                        <label className="block text-sm font-semibold text-black mb-1.5">
+                            Password
+                        </label>
+                        <input
+                            type="password"
+                            value={password}
+                            onChange={e => setPassword(e.target.value)}
+                            className="w-full border border-black/15 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-brand"
+                            required
+                        />
+                    </div>
 
-          {error && (
-            <p className="text-sm text-red-600">{error}</p>
-          )}
+                    {error && (
+                        <p className="text-sm text-red-600">{error}</p>
+                    )}
 
-          <button
-            type="submit"
-            disabled={loading || rateLimited}
-            className="w-full bg-blue-600 text-white rounded-lg py-2 text-sm font-medium hover:bg-blue-700 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
-          >
-            {loading ? 'Signing in...' : 'Sign in'}
-          </button>
-        </form>
-      </div>
-    </div>
-  );
+                    <button
+                        type="submit"
+                        disabled={loading || rateLimited}
+                        className="w-full bg-brand text-white rounded-full py-2.5 text-sm font-semibold hover:bg-brand-hover disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-200 hover:scale-[1.02] active:scale-[0.98]"
+                    >
+                        {loading ? 'Signing in...' : 'Sign in'}
+                    </button>
+                </form>
+            </div>
+        </div>
+    );
 }
-

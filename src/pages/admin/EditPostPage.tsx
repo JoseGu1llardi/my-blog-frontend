@@ -4,6 +4,9 @@ import { getMyPostById, updatePost } from '../../api/posts';
 import type { PostUpdateRequest } from '../../types/post';
 import type { ErrorResponse } from '../../types/api';
 
+const inputClass = "w-full border border-black/15 rounded-lg px-3 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-brand transition-colors";
+const labelClass = "block text-sm font-semibold text-black mb-1.5";
+
 export default function EditPostPage() {
     const { id } = useParams<{ id: string }>();
     const navigate = useNavigate();
@@ -24,7 +27,7 @@ export default function EditPostPage() {
     useEffect(() => {
         async function fetchPost() {
             try {
-                const post = await getMyPostById(Number(id))
+                const post = await getMyPostById(Number(id));
                 setForm({
                     title: post.title,
                     content: post.content,
@@ -34,8 +37,8 @@ export default function EditPostPage() {
                     metaDescription: post.metaDescription ?? '',
                     metaKeywords: post.metaKeywords ?? '',
                 });
-            } catch (err) {
-                setError('Failed to load post');
+            } catch {
+                setError('Failed to load post.');
             } finally {
                 setFetching(false);
             }
@@ -70,23 +73,23 @@ export default function EditPostPage() {
         }
     }
 
-    if (fetching) return <p className="text-sm text-gray-500">Loading post...</p>;
+    if (fetching) return <p className="text-sm text-black/50">Loading post...</p>;
 
     return (
         <div className="max-w-3xl">
-            <div className="flex items-center justify-between mb-6">
-                <h2 className="text-xl font-semibold text-gray-900">Edit post</h2>
+            <div className="flex items-center justify-between mb-8">
+                <h1 className="text-3xl font-bold text-black tracking-tight">Edit post</h1>
                 <button
                     onClick={() => navigate('/admin/posts')}
-                    className="text-sm text-gray-500 hover:text-gray-700"
+                    className="text-sm text-black/40 hover:text-black transition-colors"
                 >
                     ← Back
                 </button>
             </div>
 
-            <form onSubmit={handleSubmit} className="space-y-5">
+            <form onSubmit={handleSubmit} className="space-y-6">
                 <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-1">
+                    <label className={labelClass}>
                         Title <span className="text-red-500">*</span>
                     </label>
                     <input
@@ -96,12 +99,12 @@ export default function EditPostPage() {
                         onChange={handleChange}
                         required
                         maxLength={500}
-                        className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+                        className={inputClass}
                     />
                 </div>
 
                 <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-1">
+                    <label className={labelClass}>
                         Content <span className="text-red-500">*</span>
                     </label>
                     <textarea
@@ -110,49 +113,43 @@ export default function EditPostPage() {
                         onChange={handleChange}
                         required
                         rows={12}
-                        className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 resize-y font-mono"
+                        className={`${inputClass} resize-y font-mono`}
                     />
                 </div>
 
                 <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-1">
-                        Excerpt
-                    </label>
+                    <label className={labelClass}>Excerpt</label>
                     <textarea
                         name="excerpt"
                         value={form.excerpt}
                         onChange={handleChange}
                         rows={3}
                         maxLength={1000}
-                        className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 resize-none"
+                        className={`${inputClass} resize-none`}
                     />
                 </div>
 
                 <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-1">
-                        Featured Image URL
-                    </label>
+                    <label className={labelClass}>Featured Image URL</label>
                     <input
                         type="url"
                         name="featuredImage"
                         value={form.featuredImage}
                         onChange={handleChange}
-                        className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+                        className={inputClass}
                         placeholder="https://..."
                     />
                 </div>
 
                 <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-1">
-                        Meta Description
-                    </label>
+                    <label className={labelClass}>Meta Description</label>
                     <input
                         type="text"
                         name="metaDescription"
                         value={form.metaDescription}
                         onChange={handleChange}
                         maxLength={500}
-                        className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+                        className={inputClass}
                     />
                 </div>
 
@@ -164,14 +161,14 @@ export default function EditPostPage() {
                     <button
                         type="submit"
                         disabled={loading}
-                        className="bg-blue-600 text-white text-sm px-6 py-2 rounded-lg hover:bg-blue-700 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+                        className="bg-brand text-white text-sm px-6 py-2.5 rounded-full font-semibold hover:bg-brand-hover disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-200 hover:scale-[1.02] active:scale-[0.98]"
                     >
                         {loading ? 'Saving...' : 'Save changes'}
                     </button>
                     <button
                         type="button"
                         onClick={() => navigate('/admin/posts')}
-                        className="text-sm px-6 py-2 rounded-lg border border-gray-300 hover:bg-gray-50 transition-colors"
+                        className="text-sm px-6 py-2.5 rounded-full border border-black/15 text-black/65 hover:border-black/35 hover:text-black transition-colors"
                     >
                         Cancel
                     </button>

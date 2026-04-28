@@ -14,40 +14,53 @@ function ProtectedRoute({ children }: { children: React.ReactNode }) {
 function AdminLayout({ children }: { children: React.ReactNode }) {
     const { user, logout } = useAuth();
 
+    // Gera iniciais do nome
+    const initials = user?.fullName
+        .split(' ')
+        .slice(0, 2)
+        .map(n => n[0])
+        .join('')
+        .toUpperCase() ?? '?';
+
     return (
-        <div className="min-h-screen bg-gray-50 flex">
+        <div className="min-h-screen bg-white flex">
             {/* Sidebar */}
-            <aside className="w-48 bg-white shadow-sm flex flex-col">
-                <div className="px-4 py-5 border-b border-gray-100">
-                    <span className="text-sm font-semibold text-gray-900">Blog Admin</span>
+            <aside className="w-60 bg-white border-r border-black/8 flex flex-col">
+                <div className="px-4 py-6 border-b border-black/8">
+                    <span className="text-base font-bold text-black tracking-tight">Blog Admin</span>
                 </div>
-                <nav className="flex-1 px-2 py-4 space-y-1">
+                <nav className="flex-1 px-3 py-4 space-y-0.5">
                     <NavLink
                         to="/admin/posts"
                         className={({ isActive }) =>
                             `block px-3 py-2 rounded-lg text-sm font-medium transition-colors ${
                                 isActive
-                                    ? 'bg-blue-50 text-blue-700'
-                                    : 'text-gray-600 hover:bg-gray-50'
+                                    ? 'bg-brand-light text-brand border-l-2 border-brand font-semibold'
+                                    : 'text-black/60 hover:bg-black/5 hover:text-black'
                             }`
                         }
                     >
                         Posts
                     </NavLink>
                 </nav>
-                <div className="px-4 py-4 border-t border-gray-100">
-                    <p className="text-xs text-gray-500 mb-2">{user?.fullName}</p>
-                    <button
-                        onClick={logout}
-                        className="text-xs text-red-600 hover:text-red-700 font-medium"
-                    >
-                        Sign out
-                    </button>
+                <div className="px-4 py-4 border-t border-black/8 flex items-center gap-3">
+                    <div className="w-8 h-8 rounded-full bg-brand-light text-brand flex items-center justify-center text-xs font-bold flex-shrink-0">
+                        {initials}
+                    </div>
+                    <div className="flex-1 min-w-0">
+                        <p className="text-sm font-medium text-black truncate">{user?.fullName}</p>
+                        <button
+                            onClick={logout}
+                            className="text-xs text-black/40 hover:text-black transition-colors"
+                        >
+                            Sign out
+                        </button>
+                    </div>
                 </div>
             </aside>
 
             {/* Main content */}
-            <main className="flex-1 px-8 py-6">
+            <main className="flex-1 px-14 py-12">
                 {children}
             </main>
         </div>
