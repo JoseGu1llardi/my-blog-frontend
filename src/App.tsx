@@ -5,6 +5,7 @@ import PostsPage from './pages/admin/PostsPage';
 import type React from 'react';
 import CreatePostPage from './pages/admin/CreatePostPage';
 import EditPostPage from './pages/admin/EditPostPage';
+import HomePage from './pages/public/HomePage';
 
 function ProtectedRoute({ children }: { children: React.ReactNode }) {
     const { isAuthenticated } = useAuth();
@@ -14,7 +15,6 @@ function ProtectedRoute({ children }: { children: React.ReactNode }) {
 function AdminLayout({ children }: { children: React.ReactNode }) {
     const { user, logout } = useAuth();
 
-    // Gera iniciais do nome
     const initials = user?.fullName
         .split(' ')
         .slice(0, 2)
@@ -24,7 +24,6 @@ function AdminLayout({ children }: { children: React.ReactNode }) {
 
     return (
         <div className="min-h-screen bg-white flex">
-            {/* Sidebar */}
             <aside className="w-60 bg-white border-r border-black/8 flex flex-col">
                 <div className="px-4 py-6 border-b border-black/8">
                     <span className="text-base font-bold text-black tracking-tight">Blog Admin</span>
@@ -58,8 +57,6 @@ function AdminLayout({ children }: { children: React.ReactNode }) {
                     </div>
                 </div>
             </aside>
-
-            {/* Main content */}
             <main className="flex-1 px-14 py-12">
                 {children}
             </main>
@@ -70,7 +67,13 @@ function AdminLayout({ children }: { children: React.ReactNode }) {
 export default function App() {
     return (
         <Routes>
+            {/* Public routes */}
+            <Route path='/' element={<HomePage />} />
+
+            {/* Auth */}
             <Route path='/login' element={<LoginPage />} />
+
+            {/* Admin routes */}
             <Route
                 path='/admin/*'
                 element={
@@ -86,7 +89,7 @@ export default function App() {
                     </ProtectedRoute>
                 }
             />
-            <Route path='*' element={<Navigate to='/admin' replace />} />
+            <Route path='*' element={<Navigate to='/' replace />} />
         </Routes>
     );
 }
