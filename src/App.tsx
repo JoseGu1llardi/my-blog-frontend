@@ -6,6 +6,7 @@ import type React from 'react';
 import CreatePostPage from './pages/admin/CreatePostPage';
 import EditPostPage from './pages/admin/EditPostPage';
 import HomePage from './pages/public/HomePage';
+import PostPage from './pages/public/PostPage';
 
 function ProtectedRoute({ children }: { children: React.ReactNode }) {
     const { isAuthenticated } = useAuth();
@@ -69,6 +70,7 @@ export default function App() {
         <Routes>
             {/* Public routes */}
             <Route path='/' element={<HomePage />} />
+            <Route path='/posts/:slug' element={<PostPage />} />
 
             {/* Auth */}
             <Route path='/login' element={<LoginPage />} />
